@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // Define the schema for news and updates
 const newsAndUpdateSchema = new mongoose.Schema({
     date: {
-        type: Date,
+        type: String,
         required: true,
         default: Date.now // Automatically set the current date if not provided
     },
