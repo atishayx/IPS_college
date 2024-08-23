@@ -1,8 +1,14 @@
 const express = require('express');
+const NewsAndUpdate = require('../models/newsAndUpdate');
 const router = express.Router();
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'IPS College' });
+router.get('/', async function(req, res, next) {
+  const newsAndUpdate = await NewsAndUpdate.find({});
+  console.log("newsAndUpdate", newsAndUpdate)
+  res.render('index', 
+    { title: 'IPS College',
+      news: newsAndUpdate
+    });
 });
 
 router.get('/about', function(req, res, next) {

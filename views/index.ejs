@@ -38,10 +38,13 @@
       </div>
       <div class="main-updates">
         <h2>NEWS & UPDATES </h2>
+        <% for(var i = 0;i < news.length; i++){%>
+          
         <div class="updates-info">
-          <h5>Dates</h5>
-          <p>This is some info</p>
-        </div>
+          <h5>news[i].date</h5>
+          <p>news[i].text</p>
+        </div> 
+        <%}%>
         <div class="updates-info">
           <h5>Dates</h5>
           <p>This is some info</p>

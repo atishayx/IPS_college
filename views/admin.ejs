@@ -4,9 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .side-nav {
+            width: 200px;
+            float: left;
+            border-right: 1px solid black;
+            height: 100vh;
+        }
+
+        .main-content {
+            margin-left: 210px;
+            padding: 20px;
+        }
+
+        .content-section {
+            display: none; /* Hide all sections initially */
+        }
+
+        .active {
+            display: block; /* Show the active section */
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello from admin</h1>
-    <a href="/admin/clickme">Click</a>
+    <div>
+        <div class="side-nav">
+            <ul>
+                <li><a href="#" class="nav-link" data-section="news-and-update">News And Update</a></li>
+                <li><a href="#" class="nav-link" data-section="teaching">Teaching</a></li>
+                <li><a href="#" class="nav-link" data-section="ips-event">IPS Event</a></li>
+                <li><a href="#" class="nav-link" data-section="teams">Teams</a></li>
+                <li><a href="#" class="nav-link" data-section="administration">Administration</a></li>
+                <li><a href="#" class="nav-link" data-section="tour-gallery">Tour Gallery</a></li>
+                <li><a href="#" class="nav-link" data-section="our-infrastructure-facilities">Our Infrastructure Facilities</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="content-section news-and-update active">
+                <form action="/admin/newsAndUpdate" method="post">
+                  <h2>News And Update Form</h2>
+                  <input type="text" name="datetime" placeholder="datetime">
+                  <input type="text" name="information" placeholder="Information">
+                  <button type="submit">submit</button>
+                </form>
+            </div>
+
+            <div class="content-section teaching">
+                <h2>Teaching</h2>
+                <input type="text" placeholder="Course Title">
+                <input type="text" placeholder="Course Details">
+            </div>
+
+            <div class="content-section ips-event">
+                <form action="/admin/ips-event" method="post" enctype="multipart/form-data">
+                    <h2>Ips Event</h2>
+                    <input type="file" name="image" placeholder="image">
+                    <input type="text" name="title" placeholder="title">
+                    <button type="submit">submit</button>
+                </form>
+            </div>
+
+            <div class="content-section teams">
+                <form action="/admin/teams" method="post" enctype="multipart/form-data">
+                    <h2>Teams</h2>
+                    <input type="file" name="image" placeholder="image">
+                    <input type="text" name="title" placeholder="title">
+                    <button type="submit">submit</button>
+                </form>
+            </div>
+
+            <div class="content-section administration">
+                <form action="/admin/administration" method="post" enctype="multipart/form-data">
+                    <h2>Administration</h2>
+                    <input type="text" name="name" placeholder="name">
+                    <input type="text" name="role" placeholder="role">
+                    <input type="file" name="image" placeholder="image">
+                    <input type="text" name="department" placeholder="department">
+                    <button type="submit">submit</button>
+                </form>
+            </div>
+
+            <div class="content-section tour-gallery">
+                <form action="/admin/tour-gallery" method="post" enctype="multipart/form-data">
+                    <h2>Tour Gallery</h2>
+                    <input type="file" name="image" placeholder="image">
+                    <input type="text" name="place" placeholder="place">
+                    <button type="submit">submit</button>
+                </form>
+            </div>
+
+            <div class="content-section our-infrastructure-facilities">
+                <form action="/admin/our-infrastructure-facilities" method="post" enctype="multipart/form-data">
+                    <h2>Our Infrastructure Facilities</h2>
+                    <input type="file" name="image" placeholder="image">
+                    <input type="text" name="title" placeholder="title">
+                    <button type="submit">submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle the content switching
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.content-section');
+
+            links.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent the default link behavior
+                    const sectionToShow = this.getAttribute('data-section');
+
+                    // Hide all sections
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+
+                    // Show the selected section
+                    document.querySelector(`.${sectionToShow}`).classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
