@@ -8,14 +8,17 @@ const teams = require('../models/teams');
 const administration = require('../models/administration');
 const tour = require('../models/tourGallery');
 const ourInfrastructureFacilities = require('../models/ourInfrastructureFacilities');
+const ourTopRankers = require('../models/ourTopRankers');
+const ourPlacement = require('../models/ourPlacements');
+const ipsTours = require('../models/ipsTours');
 
-// Set up Multer for image uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/') // Specify the directory to save uploaded images
+    cb(null, 'public/uploads/'); // Specify the directory to save uploaded images
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)) // Name the file with a timestamp to avoid conflicts
+    const uniqueName = Date.now() + path.extname(file.originalname);
+    cb(null, uniqueName); // Name the file with a timestamp to avoid conflicts
   }
 });
 
@@ -33,10 +36,12 @@ router.get('/clickme', function(req, res, next) {
   res.render('clickme');
 });
 
+
+
 router.post('/our-infrastructure-facilities', upload.single('image'), async (req, res) => {
   try {
     const { title } = req.body;
-    const image = req.file ? req.file.path : null; // Get the image file path
+    const image = req.file ? req.file.filename : null;  // Get the image file path
 
     const newEntry = new ourInfrastructureFacilities({
       image: image, // Store the path of the uploaded image
@@ -55,7 +60,7 @@ router.post('/our-infrastructure-facilities', upload.single('image'), async (req
 router.post('/tour-gallery', upload.single('image'), async (req, res) => {
   try {
     const { place } = req.body;
-    const image = req.file ? req.file.path : null; // Get the image file path
+    const image = req.file ? req.file.filename : null;  // Get the image file path
 
     const newEntry = new tour({
       image: image, // Store the path of the uploaded image
@@ -74,7 +79,7 @@ router.post('/tour-gallery', upload.single('image'), async (req, res) => {
 router.post('/administration', upload.single('image'), async (req, res) => {
   try {
     const { name, role, department } = req.body;
-    const image = req.file ? req.file.path : null; // Get the image file path
+    const image = req.file ? req.file.filename : null;  // Get the image file path
 
     const newEntry = new administration({
       name: name,
@@ -95,7 +100,7 @@ router.post('/administration', upload.single('image'), async (req, res) => {
 router.post('/teams', upload.single('image'), async (req, res) => {
   try {
     const { title } = req.body;
-    const image = req.file ? req.file.path : null; // Get the image file path
+    const image = req.file ? req.file.filename : null;  // Get the image file path
 
     const newEntry = new teams({
       title: title,
@@ -112,9 +117,9 @@ router.post('/teams', upload.single('image'), async (req, res) => {
 });
 
 router.post('/ips-event', upload.single('image'), async (req, res) => {
-  try {
+  // try {
     const { title } = req.body;
-    const image = req.file ? req.file.path : null; // Get the image file path
+    const image = req.file ? req.file.filename : null;  // Get the image file path
 
     const newEntry = new ipsEvent({
       title: title,
@@ -123,10 +128,10 @@ router.post('/ips-event', upload.single('image'), async (req, res) => {
 
     await newEntry.save();
     res.send('Event created successfully with image uploaded!');
-  } catch (err) {
-    res.status(500).send('Error saving event to the database.');
-    console.error(err);
-  }
+  // } catch (err) {
+  //   res.status(500).send('Error saving event to the database.');
+  //   console.error(err);
+  // }
 });
 
  // Handle form submission

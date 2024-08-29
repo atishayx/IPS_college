@@ -37,10 +37,12 @@
                 <li><a href="#" class="nav-link" data-section="administration">Administration</a></li>
                 <li><a href="#" class="nav-link" data-section="tour-gallery">Tour Gallery</a></li>
                 <li><a href="#" class="nav-link" data-section="our-infrastructure-facilities">Our Infrastructure Facilities</a></li>
+
             </ul>
         </div>
         <div class="main-content">
             <div class="content-section news-and-update active">
+                <%- include('admin/newsAndUpdate') -%>
                 <form action="/admin/newsAndUpdate" method="post">
                   <h2>News And Update Form</h2>
                   <input type="text" name="datetime" placeholder="datetime">
@@ -101,7 +103,8 @@
                     <button type="submit">submit</button>
                 </form>
             </div>
-        </div>
+            
+        </div> 
     </div>
 
     <script>
