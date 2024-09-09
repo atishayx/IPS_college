@@ -32,7 +32,13 @@
             <ul>
                 <li><a href="#" class="nav-link" data-section="news-and-update">News And Update</a></li>
                 <li><a href="#" class="nav-link" data-section="teaching">Teaching</a></li>
-                <li><a href="#" class="nav-link" data-section="ips-event">IPS Event</a></li>
+                <li><a href="#" class="nav-link" data-section="ips-event">IPS Event</a>
+                    <ul>
+                        <% for(var i=0;i< ipsevent.length;i++){%>
+                        <li> <a href="javascript:void(0);" class="nav-link" data-section="<%=ipsevent[i].title%>"><%=ipsevent[i].title%></a></li>
+                        <%}%>
+                    </ul>
+                </li>
                 <li><a href="#" class="nav-link" data-section="teams">Teams</a></li>
                 <li><a href="#" class="nav-link" data-section="administration">Administration</a></li>
                 <li><a href="#" class="nav-link" data-section="tour-gallery">Tour Gallery</a></li>
@@ -52,12 +58,20 @@
             </div>
 
             <div class="content-section teaching">
-                <h2>Teaching</h2>
-                <input type="text" placeholder="Course Title">
-                <input type="text" placeholder="Course Details">
+                <%- include('admin/teaching') -%>
+                <form action="/admin/teaching" method="post" enctype="multipart/form-data">
+                    <h2>Teaching</h2>
+                    <input type="file" placeholder="image" name="image">
+                    <input type="text" name="name" placeholder="name">
+                    <input type="text" name="course" placeholder="course">
+                    <input type="text" placeholder="role" name="role">
+                    <button type="submit">submit</button>
+               </form>
             </div>
 
+            <!-- ips event -->
             <div class="content-section ips-event">
+                <%- include('admin/ipsEvent') -%>
                 <form action="/admin/ips-event" method="post" enctype="multipart/form-data">
                     <h2>Ips Event</h2>
                     <input type="file" name="image" placeholder="image">
@@ -66,7 +80,9 @@
                 </form>
             </div>
 
+
             <div class="content-section teams">
+                <%- include('admin/teams') -%>
                 <form action="/admin/teams" method="post" enctype="multipart/form-data">
                     <h2>Teams</h2>
                     <input type="file" name="image" placeholder="image">
@@ -76,6 +92,7 @@
             </div>
 
             <div class="content-section administration">
+                <%- include('admin/administration') -%>
                 <form action="/admin/administration" method="post" enctype="multipart/form-data">
                     <h2>Administration</h2>
                     <input type="text" name="name" placeholder="name">
@@ -87,6 +104,7 @@
             </div>
 
             <div class="content-section tour-gallery">
+                <%- include('admin/tourGallery') -%>
                 <form action="/admin/tour-gallery" method="post" enctype="multipart/form-data">
                     <h2>Tour Gallery</h2>
                     <input type="file" name="image" placeholder="image">
@@ -96,6 +114,7 @@
             </div>
 
             <div class="content-section our-infrastructure-facilities">
+                <%- include('admin/ourInfra') -%>
                 <form action="/admin/our-infrastructure-facilities" method="post" enctype="multipart/form-data">
                     <h2>Our Infrastructure Facilities</h2>
                     <input type="file" name="image" placeholder="image">
@@ -129,5 +148,7 @@
             });
         });
     </script>
+
+
 </body>
 </html>

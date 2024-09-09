@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPS Event</title>
+</head>
+
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .edit, .delete {
+            color: #007BFF;
+            cursor: pointer;
+        }
+        .edit:hover, .delete:hover {
+            text-decoration: underline;
+        }
+</style>
+
+<body>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Course</th>
+                    <th>Role</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i = 0; i < Teaching.length; i++) { %>
+                <tr>
+                    <td><img src="/uploads/<%= Teaching[i].image %>" alt="Image" style="width: 50px; height: 50px;"></td>
+                    <td><%= Teaching[i].name %></td>
+                    <td><%= Teaching[i].course %></td>
+                    <td><%= Teaching[i].role %></td>
+                    <td><button onclick="openEditForm('<%= Teaching[i]._id %>', '<%= Teaching[i].name %>', '<%= Teaching[i].course %>', '<%= Teaching[i].role %>')">Edit</button></td>
+                    <td><button onclick="deleteTeaching('<%= Teaching[i]._id %>')">Delete</button></td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="editFormPopup" style="display: none;">
+        <form id="editForm" enctype="multipart/form-data">
+            <input type="hidden" id="editId" name="id">
+            
+            <label for="name">Name:</label>
+            <input type="text" id="editName" name="name"><br>
+        
+            <label for="course">Course:</label>
+            <input type="text" id="editCourse" name="course"><br>
+        
+            <label for="role">Role:</label>
+            <input type="text" id="editRole" name="role"><br>
+        
+            <label for="image">Upload Image:</label>
+            <input type="file" id="editImage" name="image"><br>
+        
+            <button type="button" onclick="submitEditForm()">Save</button>
+            <button type="button" onclick="closeEditForm()">Cancel</button>
+        </form>
+    </div>
+
+<script>
+// Open the popup form and populate with current data
+function openEditForm(id, name, course, role) {
+    document.getElementById('editId').value = id;
+    document.getElementById('editName').value = name;
+    document.getElementById('editCourse').value = course;
+    document.getElementById('editRole').value = role;
+    document.getElementById('editFormPopup').style.display = 'block';
+}
+
+// Close the popup form
+function closeEditForm() {
+    document.getElementById('editFormPopup').style.display = 'none';
+}
+
+// Submit the form data (including the image) to the backend
+function submitEditForm() {
+    const form = document.getElementById('editForm');
+    const formData = new FormData(form);
+
+    // Debug: Check individual field values before submission
+    console.log("ID:", form.elements['id'].value);
+    console.log("Name:", form.elements['name'].value);
+    console.log("Course:", form.elements['course'].value);
+    console.log("Role:", form.elements['role'].value);
+    console.log("Image:", form.elements['image'].files[0]);
+
+    // Debug: Check form data entries
+    for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+    }
+
+    console.log("xx", formData)
+    fetch('/admin/update-teaching', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === 'Teaching record updated successfully') {
+            // window.location.reload(); // Refresh page to show updated data
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+function deleteTeaching(id) {
+    fetch('/admin/delete-teaching', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: id }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === 'Teaching record deleted successfully') {
+            window.location.reload(); // Refresh page to show updated data
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+</script>
+
+
+</body>
+</html>
