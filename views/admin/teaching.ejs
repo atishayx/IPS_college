@@ -60,21 +60,37 @@
             </thead>
             <tbody>
                 <% for(var i = 0; i < Teaching.length; i++) { %>
-                <tr>
-                    <td><img src="/uploads/<%= Teaching[i].image %>" alt="Image" style="width: 50px; height: 50px;"></td>
-                    <td><%= Teaching[i].name %></td>
-                    <td><%= Teaching[i].course %></td>
-                    <td><%= Teaching[i].role %></td>
-                    <td><button onclick="openEditForm('<%= Teaching[i]._id %>', '<%= Teaching[i].name %>', '<%= Teaching[i].course %>', '<%= Teaching[i].role %>')">Edit</button></td>
-                    <td><button onclick="deleteTeaching('<%= Teaching[i]._id %>')">Delete</button></td>
-                </tr>
-                <% } %>
-            </tbody>
+                    <tr>
+                        <td>
+                            <img src="/uploads/<%= Teaching[i].image %>" alt="Image" style="width: 50px; height: 50px;">
+                        </td>
+                        <td>
+                            <%= Teaching[i].name %>
+                            <input type="hidden" value="<%= Teaching[i].name %>" id="name_<%= Teaching[i]._id %>">
+                        </td>
+                        <td>
+                            <%= Teaching[i].course %>
+                            <input type="hidden" value="<%= Teaching[i].course %>" id="course_<%= Teaching[i]._id %>">
+                        </td>
+                        <td>
+                            <%= Teaching[i].role %>
+                            <input type="hidden" value="<%= Teaching[i].role %>" id="role_<%= Teaching[i]._id %>">
+                        </td>
+                        <td>
+                            <button onclick="openEditForm('<%= Teaching[i]._id %>')">Edit</button>
+                        </td>
+                        <td>
+                            <button onclick="deleteTeaching('<%= Teaching[i]._id %>')">Delete</button>
+                        </td>
+                    </tr>
+                    <% } %>
+                    
+            </tbody>    
         </table>
     </div>
 
     <div id="editFormPopup" style="display: none;">
-        <form id="editForm" enctype="multipart/form-data">
+        <form id="editFormteaching" enctype="multipart/form-data">
             <input type="hidden" id="editId" name="id">
             
             <label for="name">Name:</label>
@@ -89,44 +105,95 @@
             <label for="image">Upload Image:</label>
             <input type="file" id="editImage" name="image"><br>
         
-            <button type="button" onclick="submitEditForm()">Save</button>
+            <button type="button" onclick="submitEditForm()">Save---</button>
             <button type="button" onclick="closeEditForm()">Cancel</button>
         </form>
+        
     </div>
 
 <script>
 // Open the popup form and populate with current data
-function openEditForm(id, name, course, role) {
-    document.getElementById('editId').value = id;
-    document.getElementById('editName').value = name;
-    document.getElementById('editCourse').value = course;
-    document.getElementById('editRole').value = role;
+function openEditForm(id) {
+    // Get the hidden input values based on the ID
+    const name = document.getElementById('name_' + id).value;
+    const course = document.getElementById('course_' + id).value;
+    const role = document.getElementById('role_' + id).value;
+
+    console.log("Name:", name, "Course:", course, "Role:", role, "ID:", id);  // Debugging
+
+    // Populate the form fields with the retrieved values
+    const editIdField = document.getElementById('editId');
+    const editNameField = document.getElementById('editName');
+    const editCourseField = document.getElementById('editCourse');
+    const editRoleField = document.getElementById('editRole');
+
+        // Check if elements are found
+    console.log("editIdField:", editIdField);
+    console.log("editNameField:", editNameField);
+    console.log("editCourseField:", editCourseField);
+    console.log("editRoleField:", editRoleField);
+
+    if (editIdField && editNameField && editCourseField && editRoleField) {
+        // Set the values
+        editIdField.value = id;
+        editNameField.value = name;
+        editCourseField.value = course;
+        editRoleField.value = role;
+
+        // Log to verify values
+        console.log("ID set in form:", editIdField.value);
+        console.log("Name set in form:", editNameField.value);
+        console.log("Course set in form:", editCourseField.value);
+        console.log("Role set in form:", editRoleField.value);
+    } else {
+        console.error("One or more form fields are missing.");
+    }
+
+    // Show the form popup
     document.getElementById('editFormPopup').style.display = 'block';
 }
 
+
 // Close the popup form
 function closeEditForm() {
-    document.getElementById('editFormPopup').style.display = 'none';
+    document.getElementById('editFormPopup').style.display = 'block';
 }
 
 // Submit the form data (including the image) to the backend
 function submitEditForm() {
-    const form = document.getElementById('editForm');
-    const formData = new FormData(form);
+    const form = document.getElementById('editFormteaching');  // Make sure the form ID is correct
+    
+    console.log("Form field:", form);  // Debugging
+    console.log("ID:", form.elements['id']);
 
-    // Debug: Check individual field values before submission
-    console.log("ID:", form.elements['id'].value);
-    console.log("Name:", form.elements['name'].value);
-    console.log("Course:", form.elements['course'].value);
-    console.log("Role:", form.elements['role'].value);
-    console.log("Image:", form.elements['image'].files[0]);
+    // Access form elements
+    const idField = form.elements['id'];
+    const nameField = form.elements['name'];
+    const courseField = form.elements['course'];
+    const roleField = form.elements['role'];
+    const imageField = form.elements['image'];
+    console.log("idField", idField.value)
 
-    // Debug: Check form data entries
+    // Debugging to ensure these fields exist
+    if (!nameField || !courseField || !roleField || !imageField) {
+        console.error("One or more form fields are missing.");
+        return;
+    }
+
+    // Create a FormData object to send the data
+    const formData = new FormData();
+    formData.append('id', idField.value);  // Append the ID
+    formData.append('name', nameField.value);          // Append the name
+    formData.append('course', courseField.value);      // Append the course
+    formData.append('role', roleField.value);          // Append the role
+    formData.append('image', imageField.files[0]);     // Append the image file
+
+    // Debugging to ensure FormData is populated correctly
     for (let [key, value] of formData.entries()) {
         console.log(key, value);
     }
 
-    console.log("xx", formData)
+    // Send the form data to the backend
     fetch('/admin/update-teaching', {
         method: 'POST',
         body: formData
@@ -134,7 +201,10 @@ function submitEditForm() {
     .then(response => response.json())
     .then(data => {
         if (data.message === 'Teaching record updated successfully') {
-            // window.location.reload(); // Refresh page to show updated data
+            // Optionally reload the page or update the UI without a page reload
+            // window.location.reload();  // Refresh page to show updated data
+        } else {
+            console.error('Update failed:', data.message);
         }
     })
     .catch(error => {

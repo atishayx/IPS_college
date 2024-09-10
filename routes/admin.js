@@ -175,7 +175,7 @@ router.post('/update-teaching', upload.single('image'), async (req, res) => {
   const { id, name, course, role } = req.body;
   const image = req.file ? req.file.filename : null;
 
-  try {
+  // try {
       const updateData = { name, course, role, image };
       // if (image) {
       //     updateData.image = `/uploads/${image}`; // Store image path
@@ -184,14 +184,14 @@ router.post('/update-teaching', upload.single('image'), async (req, res) => {
       const updatedTeaching = await teaching.findByIdAndUpdate(id, updateData, { new: true });
       console.log(updatedTeaching)
 
-      if (!updatedTeaching) {
+      if (!updatedTeaching) { 
           return res.status(404).send({ message: 'Teaching record not found' });
       }
 
       res.status(200).send({ message: 'Teaching record updated successfully', data: updatedTeaching });
-  } catch (err) {
-      res.status(500).send({ message: 'Error updating teaching record', error: err.message });
-  }
+  // } catch (err) {
+  //     res.status(500).send({ message: 'Error updating teaching record', error: err.message });
+  // }
 });
 
 // Delete Teaching Data
