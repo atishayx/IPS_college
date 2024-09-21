@@ -123,6 +123,14 @@ router.get('/activity', function(req, res, next) {
   res.render('activity', { title: 'Ranker Page' });
 });
 
+router.get('/social', function(req, res, next) {
+  res.render('social', { title: 'Ranker Page' });
+});
+
+router.get('/footer', function(req, res, next) {
+  res.render('footer', { title: 'Ranker Page' });
+});
+
 router.get('/cl2', function(req, res, next) {
   res.render('cl2', { title: 'Ranker Page' });
 });

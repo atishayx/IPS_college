@@ -1081,6 +1081,399 @@ button:hover {
   border-left: 0 !important;
 }
 
+
+/* Admin Pannel CSS Begin from here */
+
+.side-nav {
+  padding: 4vh 2vw;
+  width: 200px;
+  float: left;
+  border-right: 1px solid black;
+  height: 100vh;
+  background-color: #7a2b2b;
+}
+
+.main-content {
+  margin-left: 210px;
+  padding: 20px;
+}
+
+.content-section {
+  display: none; /* Hide all sections initially */
+}
+
+.active {
+  display: block; /* Show the active section */
+}
+
+
+/* Social Media code begins here */
+.social-wrapper{
+  padding: 0 4vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  /* background-color: #7a2b2b; */
+  margin-top: 5vh;
+}
+
+.instacard {
+  width: 360px;
+  min-height: 400px;
+  background: #f6f6f6;
+  box-shadow: 0 4px 8px 0 rgba(100, 100, 100, 0.2), 0 6px 20px 0 rgba(22, 22, 22, 0.19);
+  padding: 20px;
+}
+
+.instacard .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.instacard .top .userDetails {
+  display: flex;
+  align-items: center;
+}
+
+.instacard .top .userDetails .profile_img {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 8px;
+}
+
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.instacard .top .userDetails h3 {
+  font-size: 16px;
+  color: #2c2c2c;
+  font-weight: 500;
+  line-height: 1em;
+}
+
+.instacard .top .userDetails h3 span {
+  font-size: 0.7em;
+}
+
+.imgBox {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  margin: 10px 0 15px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 230px;
+}
+
+.buttons img {
+  max-width: 24px;
+  max-height: 24px;
+  cursor: pointer;
+}
+
+.buttons .left img {
+  margin-right: 8px;;
+}
+
+.likes {
+  font-weight: 500;
+  margin-top: 5px;
+  font-size: 16px;
+  color: #4d4d4d;
+}
+
+.message {
+  font-weight: 500;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #4d4d4d;
+}
+
+.message b {
+  color: #262626;
+}
+
+.settings:after {
+  content: '\2807';
+  font-size: 25px;
+  color: #4d4d4d;
+  cursor: pointer;
+}
+
+.icon:hover {
+  opacity: 0.7;
+}
+
+/* facebook */
+.facebook-post {
+  font-family: Arial, sans-serif;
+  max-width: 350px;
+  border-radius: 5px;
+  background: #f6f6f6;
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 rgba(100, 100, 100, 0.2), 0 6px 20px 0 rgba(22, 22, 22, 0.19);
+}
+
+.facebook-header,
+.facebook-post-footer {
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.facebook-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.facebook-profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-image: url("../images/ips-logo.png");
+  background-size: cover;
+  margin-right: 10px;
+}
+
+.facebook-post-details {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.facebook-post-content {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+  padding: 0 15px;
+}
+
+.facebook-post-image {
+  width: 100%;
+  height: 300px;
+  background-image: url(../images/tours.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.facebook-post-footer {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #ccc;
+}
+
+.facebook-button {
+  color: #666;
+  cursor: pointer;
+}
+
+.facebook-button:hover {
+  text-decoration: underline;
+}
+
+
+/* youtube */
+.youtube {
+  font-family: Arial, sans-serif;
+  max-width: 350px;
+  height: 73vh;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 rgba(100, 100, 100, 0.2), 0 6px 20px 0 rgba(22, 22, 22, 0.19);
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.content {
+  height: 200vh;
+  width: 9cm;
+  background: #000;
+  border-radius: 5px;
+}
+.thumbnail img {
+  width: 100%;
+}
+.header {
+  margin-top: -6px;
+  background: #fff;
+  width: 100%;
+  height: 1.5px;
+}
+.fold {
+  margin: 10px auto 0px;
+  background: #fff;
+  opacity: 0.25;
+  width: 30px;
+  height: 3px;
+  border-radius: 20px;
+}
+.text {
+  padding: 5px;
+}
+.heading {
+  margin: 10px;
+  color: #fff;
+  font-size: 0.75em;
+  display: flex;
+  justify-content: space-between;
+}
+.heading h1 {
+  padding: 10px;
+  margin-left: -10px;
+}
+.heading button {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 2em;
+  padding: 10px;
+  border-radius: 50%;
+}
+.heading button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transition: 0.5s;
+}
+.timeline button p {
+  margin: auto 6px;
+  font-weight: bolder;
+  font-size: 0.9em;
+}
+.timeline button {
+  padding: 5px;
+  height: 25px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 20px;
+}
+.select {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.timeline .select:hover {
+  background: #fff;
+  color: #000;
+  transition: 0.5s;
+}
+.notice {
+  margin-top: 10px;
+  padding: 10px 5px;
+  line-height: 13px;
+  margin-left: -5px;
+  width: 100%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.6em;
+}
+.notice p {
+  text-indent: 10px;
+}
+.notice p span button {
+  border: none;
+  background: transparent;
+  color: #41a1e6;
+  font-size: inherit;
+  margin-left: 10px;
+}
+.comment {
+  margin-top: 10px;
+}
+.comment_main {
+  border-radius: 2px;
+}
+.comment_main:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transition: 0.5s;
+}
+.profile img {
+  float: left;
+  width: 30px;
+  border-radius: 50%;
+}
+.line1 {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.6em;
+}
+.line2 {
+  margin-top: 5px;
+  margin-left: 30px;
+  color: rgba(255, 255, 255, 1);
+  font-size: 0.6em;
+}
+.comment_main {
+  text-indent: 15px;
+}
+.other {
+  margin-top: 5px;
+  margin-left: 30px;
+  display: flex;
+  justify-content: space-around;
+}
+.other ion-icon {
+  color: #fff;
+  float: left;
+}
+.other button p {
+  font-size: 0.7em;
+  color: #fff;
+  text-indent: 5px;
+}
+.other button {
+  background: transparent !important;
+  border: none;
+  padding: 5px;
+  border-radius: 20px;
+  font-size: 1em;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+}
+.other button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transition: 0.5s;
+}
+.user2 {
+  margin-top: 15px;
+}
+.replies p {
+  color: #41a1e6;
+  font-size: 0.8em;
+  margin: 5px 5px 10px 35px;
+}
+.replies button {
+  background: transparent !important;
+  border: none;
+  height: fit-content;
+  width: 100px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  border-bottom-left-radius: 0 !important;
+  padding: 0;
+}
+
 /* Responsive Design Codde Begins from here */
 
 @media (max-width: 800px) {
