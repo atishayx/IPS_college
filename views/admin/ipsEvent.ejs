@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPS Event</title>
+</head>
+
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .edit, .delete {
+            color: #007BFF;
+            cursor: pointer;
+        }
+        .edit:hover, .delete:hover {
+            text-decoration: underline;
+        }
+</style>
+
+<body>
+   <div>
+    <table>
+        <thead>
+            <tr>
+                <th>Image Path</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i =0;i< ipsevent.length; i++){ %>
+            <tr>
+                <td><%= ipsevent[i].image %></td>
+                <td><%= ipsevent[i].title %></td>
+                <td>edit</td>
+                <td>delete</td>
+            </tr>
+            <%}%>
+        </tbody>
+    </table>
+   </div>
+</body>
+</html>

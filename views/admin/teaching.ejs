@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPS Event</title>
+</head>
+
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .edit, .delete {
+            color: #007BFF;
+            cursor: pointer;
+        }
+        .edit:hover, .delete:hover {
+            text-decoration: underline;
+        }
+        #edit-model-for-teaching{
+            display: none;
+        }
+</style>
+
+<body>
+
+    <div>
+        <form action="/admin/teaching" method="post" enctype="multipart/form-data">
+            <h2>Teaching</h2>
+            <input type="file" placeholder="image" name="image">
+            <input type="text" name="name" placeholder="name">
+            <input type="text" name="course" placeholder="course">
+            <input type="text" placeholder="role" name="role">
+            <button type="submit">submit</button>
+       </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Course</th>
+                    <th>Role</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i = 0; i < Teaching.length; i++) { %>
+                    <tr>
+                        <td>
+                            <img src="/uploads/<%= Teaching[i].image %>" alt="Image" style="width: 50px; height: 50px;">
+                        </td>
+                        <td>
+                            <%= Teaching[i].name %>
+                            <input type="hidden" id="t-name-<%= i %>" value="<%= Teaching[i].name %>">
+                        </td>
+                        <td>
+                            <%= Teaching[i].course %>
+                            <input type="hidden" id="t-course-<%= i %>" value="<%= Teaching[i].course %>">
+                        </td>
+                        <td>
+                            <%= Teaching[i].role %>
+                            <input type="hidden" id="t-role-<%= i %>" value="<%= Teaching[i].role %>">
+                        </td>
+                        <td>
+                            <input type="text" id="t-id-<%= i %>" value="<%= Teaching[i]._id %>">
+                        </td>
+                        <td>
+                            <button class="edit-for-teaching" data-index="<%= i %>">Edit</button>
+                        </td>
+                        <td>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <% } %>
+
+
+                    
+            </tbody>    
+        </table>
+    </div>
+
+        <!-- Edit Modal -->
+        <div id="edit-model-for-teaching">
+            <span class="close-btn">x</span>
+            <div class="modal-header">Edit Teaching</div>
+            <form id="t-editForm">
+                <input type="hidden" value="" id="edit-id">
+                <label for="image">Image</label>
+                <input type="file" id="edit-image">
+                <label for="edit-name">Name:</label>
+                <input type="text" value="" id="edit-name" required>
+                <label for="edit-course">Course:</label>
+                <input type="text" value="" id="edit-course" required>
+                <label for="edit-role">Role:</label>
+                <input type="text" value=" " id="edit-role" required>
+                <button type="submit">Update</button>
+            </form>
+        </div>
+
+
+<script>
+      // Show the modal and populate data
+      document.querySelectorAll('.edit-for-teaching').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const index = this.dataset.index;
+
+                const id = document.getElementById(`t-id-${index}`).value;
+                const name = document.getElementById(`t-name-${index}`).value;
+                const course = document.getElementById(`t-course-${index}`).value;
+                const role = document.getElementById(`t-role-${index}`).value;
+
+                document.getElementById('edit-id').value = id;
+                document.getElementById('edit-name').value = name;
+                document.getElementById('edit-course').value = course;
+                document.getElementById('edit-role').value = role;
+                document.getElementById('edit-model-for-teaching').style.display = 'block';
+            });
+        });
+
+
+        // Handle form submission
+        document.getElementById('t-editForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('edit-id').value;
+            const name = document.getElementById('edit-name').value;
+            const course = document.getElementById('edit-course').value;
+            const role = document.getElementById('edit-role').value;
+
+            // Create FormData object
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('name', name);
+            formData.append('course', course);
+            formData.append('role', role);
+            formData.append('image', image);
+
+        // Send the form data using fetch (or axios)
+        fetch('/admin/update-teaching', {
+        method: 'POST',
+        body: formData,  // Send formData instead of JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("data", data)
+        if (data.message) {
+            alert('Updated successfully!');
+        } else {
+            alert('Failed to update.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error updating the data.');
+    });
+        });
+</script>
+
+</body>
+</html>

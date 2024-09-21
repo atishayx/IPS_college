@@ -1,13 +1,16 @@
 const express = require('express');
 const NewsAndUpdate = require('../models/newsAndUpdate');
+const ipsEvent = require('../models/ipsEvent');
+
 const router = express.Router();
 
 router.get('/', async function(req, res, next) {
   const newsAndUpdate = await NewsAndUpdate.find({});
-  console.log("newsAndUpdate", newsAndUpdate)
+  const ipsevent = await ipsEvent.find({});
   res.render('index', 
     { title: 'IPS College',
-      news: newsAndUpdate
+      news: newsAndUpdate,
+      ipsevent: ipsevent
     });
 });
 

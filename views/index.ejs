@@ -17,30 +17,14 @@
       <div class="main-updates">
         <h2>NEWS & UPDATES </h2>
         <% for(var i = 0;i < news.length; i++){%>
-          
         <div class="updates-info">
-          <h5>news[i].date</h5>
-          <p>news[i].text</p>
-        </div> 
+          <h5><%= news[i].date %></h5>
+          <p><%= news[i].text %></p>
+        </div>  
         <%}%>
-        <div class="updates-info">
-          <h5>Dates</h5>
-          <p>This is some info</p>
-        </div>
-        <div class="updates-info">
-          <h5>Dates</h5>
-          <p>This is some info</p>
-        </div>
-        <div class="updates-info">
-          <h5>Dates</h5>
-          <p>This is some info</p>
-        </div>
-        <div class="updates-info">
-          <h5>Dates</h5>
-          <p>This is some info</p>
-        </div>
       </div>
     </div>
+
     <div class="about-clg">
       <h1>
         <u>Indira Priyadarshini College (IPS) </u>
@@ -87,15 +71,18 @@
     </div>
     <div class="other-section">
       <div class="team-section">
+       <% for(var i = 0;i< ipsevent.length; i++){%> 
         <div class="tours">
-          <img src="http://www.ipschw.com/Uploads/Images/ips-college-students.png" alt="">
+          <img src="/uploads/<%= ipsevent[i].image %>" alt="ye">
           <div class="text">
-            <h1>IPS Placements</h1>
+            <h1><%= ipsevent[i].title %></h1>
+            <h1><%= ipsevent[i].image %></h1>
             <button>
               <h3><a href="/placements">View All</a></h3>
             </button>
           </div>
         </div>
+       <%}%> 
         <div class="tours">
           <img src="..//images/rankers.jpeg" alt="">
           <div class="text">
@@ -142,6 +129,7 @@
             </button>
           </div>
         </div>
+
       </div>
     </div>
     <div class="footer">
