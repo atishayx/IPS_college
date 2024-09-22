@@ -23,6 +23,18 @@ body::-webkit-scrollbar{
   display: none;
 }
 
+#loader{
+  background-color: #fff;
+  background-image: url(../images/ips-logo.png);
+  background-size: 10%;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 999999999999999999999999999;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -1472,6 +1484,170 @@ section {
   align-items: center;
   border-bottom-left-radius: 0 !important;
   padding: 0;
+}
+
+/* Contact Us Page */
+.contactus{
+  margin-top: 18vh;
+  width: 100%;
+}
+
+.contactus>h1{
+  margin-bottom: 20px;
+  cursor: pointer;
+  padding-top: 2vw;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  text-align: center;
+  color: #7a2b2b;
+  margin-bottom: 2vw;
+}
+
+.contain {
+  background-color: #eee;
+  max-width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1em;
+  margin-bottom: 35px;
+  box-shadow: 5px 10px 10px #00000047;
+}
+
+div.form {
+  background-color: #eee;
+}
+.contact-wrapper {
+  margin: auto 0;
+}
+
+.submit-btn {
+  float: left;
+}
+.reset-btn {
+  float: right;
+}
+
+.form-headline:after {
+  content: "";
+  display: block;
+  width: 10%;
+  padding-top: 10px;
+  border-bottom: 3px solid #7a2b2b;
+}
+
+.highlight-text {
+  color: #7a2b2b;
+}
+
+.hightlight-contact-info {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.email-info {
+    margin-top: 20px;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+  font-family: 'Roboto', sans-serif;
+}
+
+.required-input {
+  color: black;
+}
+@media (min-width: 600px) {
+  .contain {
+    padding: 0;
+  }
+}
+
+h3,
+ul {
+  margin: 0;
+}
+
+h3 {
+  margin-bottom: 1rem;
+}
+
+.form-input:focus,
+textarea:focus{
+  outline: 1.5px solid #7a2b2b;
+}
+
+.form-input,
+textarea {
+  width: 100%;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+}
+
+.wrapper > * {
+  padding: 1em;
+}
+@media (min-width: 700px) {
+  .wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+  .wrapper > * {
+    padding: 2em 2em;
+  }
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contacts {
+  color: #212d31;
+}
+
+.form {
+  background: #fff;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+form label {
+  display: block;
+}
+form p {
+  margin: 0;
+}
+
+.full-width {
+  grid-column: 1 / 3;
+}
+
+.reset-btn,
+.submit-btn,
+.form-input,
+textarea {
+  padding: 1em;
+}
+
+.reset-btn, .submit-btn {
+  background: transparent;
+  border: 1px solid #7a2b2b;
+  color: #7a2b2b;
+  border-radius: 15px;
+  padding: 5px 20px;
+  text-transform: uppercase;
+}
+.reset-btn:hover, .submit-btn:hover,
+.reset-btn:focus , .submit-btn:focus{
+  background: #7a2b2b;
+  outline: 0;
+  color: #eee;
+}
+.error {
+  color: #7a2b2b;
 }
 
 /* Responsive Design Codde Begins from here */

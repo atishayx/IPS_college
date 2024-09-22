@@ -138,4 +138,8 @@ router.get('/cl2', function(req, res, next) {
   res.render('cl2', { title: 'Ranker Page' });
 });
 
+router.get('/contactus', function(req, res, next) {
+  res.render('contactus', { title: 'Ranker Page' });
+});
+
 module.exports = router;
