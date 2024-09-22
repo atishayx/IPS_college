@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News And Update</title>
 </head>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -41,28 +42,152 @@
     .edit:hover, .delete:hover {
         text-decoration: underline;
     }
+    #edit-model-for-admin{
+        display: none;
+    }
 </style>
 
 <body>
     <div>
+        <form action="/admin/administration" method="post" enctype="multipart/form-data">
+            <h2>Administration</h2>
+            <input type="text" name="name" placeholder="name">
+            <input type="text" name="role" placeholder="role">
+            <input type="file" name="image" placeholder="image">
+            <input type="text" name="department" placeholder="department">
+            <button type="submit">submit</button>
+        </form>
+
         <table>
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Text</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Department</th>
                 </tr>
             </thead>
             <tbody>
-                <% for(var i =0;i< News.length; i++){ %>
-                <tr>
-                    <td><%= News[i].date %></td>
-                    <td><%= News[i].text %></td>
-                    <td>edit</td>
-                    <td>delete</td>
-                </tr>
-                <%}%>
+                <% for(var i =0;i< Administration.length; i++){ %>
+                    <tr>
+                        <td>
+                          <img src="/uploads/<%= Administration[i].image %>" alt="Image" style="width: 50px; height: 50px;">
+                        </td>
+    
+                        <td>
+                            <%= Administration[i].name %>
+                            <input type="text" id="admin-name-<%= i %>" value="<%= Administration[i].name %>">
+                        </td>
+
+                        <td>
+                            <%= Administration[i].role %>
+                            <input type="text" id="admin-role-<%= i %>" value="<%= Administration[i].role %>">
+                        </td>
+
+                        <td>
+                            <%= Administration[i].department %>
+                            <input type="text" id="admin-department-<%= i %>" value="<%= Administration[i].department %>">
+                        </td>
+    
+                        <td>
+                            <input type="text" id="admin-id-<%= i %>" value="<%= Administration[i]._id %>">
+                        </td>
+                        <td>
+                            <button class="edit-for-admin" data-index="<%= i %>">Edit</button>
+                        </td>
+                        
+                        <td>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <%}%>
             </tbody>
+
         </table>
        </div>
+
+        <!-- Edit Modal-for-adminstration -->
+        <div id="edit-model-for-admin">
+            <span class="close-btn">x</span>
+            <div class="modal-header">Edit Teams</div>
+            <form id="admin-editForm">
+                <input type="text" value="" id="edit-admin-id">
+
+                <label for="image">Image</label>
+                <input type="file" id="edit-admin-image">
+
+                <label for="edit-name">Name:</label>
+                <input type="text" value="" id="edit-admin-name" >
+
+                <label for="edit-role">Role:</label>
+                <input type="text" value="" id="edit-admin-role" >
+
+                <label for="edit-department">department:</label>
+                <input type="text" value="" id="edit-admin-department" >
+              
+                <button type="submit">Update</button>
+            </form>
+        </div>
+
+<script>
+          // Show the modal and populate data
+          document.querySelectorAll('.edit-for-admin').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const index = this.dataset.index;
+                const id = document.getElementById(`admin-id-${index}`).value;
+                const name = document.getElementById(`admin-name-${index}`).value;
+                const role = document.getElementById(`admin-role-${index}`).value;
+                const department = document.getElementById(`admin-department-${index}`).value;
+             
+                document.getElementById('edit-admin-id').value = id;
+                document.getElementById('edit-admin-name').value = name;
+                document.getElementById('edit-admin-role').value = role;
+                document.getElementById('edit-admin-department').value = department;
+                document.getElementById('edit-model-for-admin').style.display = 'block';
+            });
+        });
+
+        // Handle form submission
+        document.getElementById('admin-editForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('edit-admin-id').value;
+            const name = document.getElementById('edit-admin-name').value;
+            const role = document.getElementById('edit-admin-role').value;
+            const department = document.getElementById('edit-admin-department').value;
+            const imageInput = document.getElementById('edit-admin-image');  // Get the image input
+
+            // Create FormData object
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('name', name);
+            formData.append('role', role);
+            formData.append('department', department);
+
+             // Check if a new image was selected and add it to FormData
+            if (imageInput.files.length > 0) {
+                formData.append('image', imageInput.files[0]);
+            }
+
+        // Send the form data using fetch (or axios)
+        fetch('/admin/update-administration', {
+        method: 'POST',
+        body: formData,  // Send formData instead of JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("data", data)
+        if (data.message) {
+            alert('Updated successfully!');
+        } else {
+            alert('Failed to update.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error updating the data.');
+    });
+        });
+</script>
 </body>
 </html>
