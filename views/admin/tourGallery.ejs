@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News And Update</title>
 </head>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -41,10 +42,19 @@
     .edit:hover, .delete:hover {
         text-decoration: underline;
     }
+    #edit-model-for-tour{
+        display: none;
+    }
 </style>
 
 <body>
     <div>
+        <form action="/admin/tour-gallery" method="post" enctype="multipart/form-data">
+            <h2>Tour Gallery</h2>
+            <input type="file" name="image" placeholder="image">
+            <input type="text" name="place" placeholder="place">
+            <button type="submit">submit</button>
+        </form>
         <table>
             <thead>
                 <tr>
@@ -55,14 +65,103 @@
             <tbody>
                 <% for(var i =0;i< Tour.length; i++){ %>
                 <tr>
-                    <td><%= Tour[i].image %></td>
-                    <td><%= Tour[i].place %></td>
-                    <td>edit</td>
+                    <td>
+                        <img src="/uploads/<%= Tour[i].image %>" alt="Image" style="width: 50px; height: 50px;">
+                    </td>
+                    <td>
+                        <%= Tour[i].place %>
+                        <input type="text" id="tour-place-<%= i %>" value="<%= Tour[i].place %>">
+                    </td>
+
+                    <td>
+                        <input type="text" id="tour-id-<%= i %>" value="<%= Tour[i]._id %>">
+                    </td>
+
+                    <td>
+                        <button class="edit-for-tour" data-index="<%= i %>">Edit</button>
+                    </td>
                     <td>delete</td>
                 </tr>
                 <%}%>
             </tbody>
         </table>
        </div>
+        <!-- Edit Modal-for-adminstration -->
+        <div id="edit-model-for-tour">
+            <span class="close-btn">x</span>
+            <div class="modal-header">Edit Teams</div>
+            <form id="tour-editForm">
+                <input type="text" value="" id="edit-tour-id">
+
+                <label for="image">Image</label>
+                <input type="file" id="edit-tour-image">
+
+                <label for="edit-place">Place:</label>
+                <input type="text" value="" id="edit-tour-place" >
+              
+                <button type="submit">Update</button>
+            </form>
+        </div>
+<script>
+          // Show the modal and populate data
+          document.querySelectorAll('.edit-for-tour').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log("line0")
+
+                const index = this.dataset.index;
+                console.log("line1")
+
+                const id = document.getElementById(`tour-id-${index}`).value;
+                console.log("line2")
+
+                const place = document.getElementById(`tour-place-${index}`).value;
+             
+                console.log("line3")
+                document.getElementById('edit-tour-id').value = id;
+                document.getElementById('edit-tour-place').value = place;
+               
+                document.getElementById('edit-model-for-tour').style.display = 'block';
+            });
+        });
+
+        // Handle form submission
+        document.getElementById('tour-editForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('edit-tour-id').value;
+            const place = document.getElementById('edit-tour-place').value;
+        
+            const imageInput = document.getElementById('edit-tour-image');  // Get the image input
+
+            // Create FormData object
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('place', place);
+
+             // Check if a new image was selected and add it to FormData
+            if (imageInput.files.length > 0) {
+                formData.append('image', imageInput.files[0]);
+            }
+
+        // Send the form data using fetch (or axios)
+        fetch('/admin/update-tour-gallery', {
+        method: 'POST',
+        body: formData,  // Send formData instead of JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("data", data)
+        if (data.message) {
+            alert('Updated successfully!');
+        } else {
+            alert('Failed to update.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error updating the data.');
+    });
+        });
+</script>
 </body>
 </html>

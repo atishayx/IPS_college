@@ -68,6 +68,29 @@ router.post('/our-infrastructure-facilities', upload.single('image'), async (req
   }
 });
 
+// Edit Teaching Data (including image)
+router.post('/update-ourInfra', upload.single('image'), async (req, res) => {
+  console.log("body_teams", req.body)
+  console.log("file", req.file)
+  const { id, title } = req.body;
+  const image = req.file ? req.file.filename : null;
+
+  try {
+      const updateData = { title, image };
+
+      const updatedTeaching = await ourInfrastructureFacilities.findByIdAndUpdate(id, updateData, { new: true });
+      console.log(updatedTeaching)
+
+      if (!updatedTeaching) { 
+          return res.status(404).send({ message: 'Teaching record not found' });
+      }
+
+      res.status(200).send({ message: 'Teaching record updated successfully', data: updatedTeaching });
+  } catch (err) {
+      res.status(500).send({ message: 'Error updating teaching record', error: err.message });
+  }
+});
+
 router.post('/tour-gallery', upload.single('image'), async (req, res) => {
   try {
     const { place } = req.body;
@@ -84,6 +107,29 @@ router.post('/tour-gallery', upload.single('image'), async (req, res) => {
   } catch (err) {
     res.status(500).send('Error saving event to the database.');
     console.error(err);
+  }
+});
+
+// Edit Teaching Data (including image)
+router.post('/update-tour-gallery', upload.single('image'), async (req, res) => {
+  console.log("body_teams", req.body)
+  console.log("file", req.file)
+  const { id, place } = req.body;
+  const image = req.file ? req.file.filename : null;
+
+  try {
+      const updateData = { place, image };
+
+      const updatedTeaching = await tour.findByIdAndUpdate(id, updateData, { new: true });
+      console.log(updatedTeaching)
+
+      if (!updatedTeaching) { 
+          return res.status(404).send({ message: 'Teaching record not found' });
+      }
+
+      res.status(200).send({ message: 'Teaching record updated successfully', data: updatedTeaching });
+  } catch (err) {
+      res.status(500).send({ message: 'Error updating teaching record', error: err.message });
   }
 });
 
@@ -108,6 +154,29 @@ router.post('/administration', upload.single('image'), async (req, res) => {
   }
 });
 
+// Edit Teaching Data (including image)
+router.post('/update-administration', upload.single('image'), async (req, res) => {
+  console.log("body_teams", req.body)
+  console.log("file", req.file)
+  const { id, name, role, department } = req.body;
+  const image = req.file ? req.file.filename : null;
+
+  try {
+      const updateData = { name, role, department, image };
+
+      const updatedTeaching = await administration.findByIdAndUpdate(id, updateData, { new: true });
+      console.log(updatedTeaching)
+
+      if (!updatedTeaching) { 
+          return res.status(404).send({ message: 'Teaching record not found' });
+      }
+
+      res.status(200).send({ message: 'Teaching record updated successfully', data: updatedTeaching });
+  } catch (err) {
+      res.status(500).send({ message: 'Error updating teaching record', error: err.message });
+  }
+});
+
 router.post('/teams', upload.single('image'), async (req, res) => {
   try {
     const { title } = req.body;
@@ -124,6 +193,29 @@ router.post('/teams', upload.single('image'), async (req, res) => {
   } catch (err) {
     res.status(500).send('Error saving event to the database.');
     console.error(err);
+  }
+});
+
+// Edit Teaching Data (including image)
+router.post('/update-teams', upload.single('image'), async (req, res) => {
+  console.log("body_teams", req.body)
+  console.log("file", req.file)
+  const { id, title } = req.body;
+  const image = req.file ? req.file.filename : null;
+
+  try {
+      const updateData = { title, image };
+
+      const updatedTeaching = await teams.findByIdAndUpdate(id, updateData, { new: true });
+      console.log(updatedTeaching)
+
+      if (!updatedTeaching) { 
+          return res.status(404).send({ message: 'Teaching record not found' });
+      }
+
+      res.status(200).send({ message: 'Teaching record updated successfully', data: updatedTeaching });
+  } catch (err) {
+      res.status(500).send({ message: 'Error updating teaching record', error: err.message });
   }
 });
 
@@ -145,6 +237,8 @@ router.post('/ips-event', upload.single('image'), async (req, res) => {
   //   console.error(err);
   // }
 });
+
+
 
 // teaching route add, edit, delete
 router.post('/teaching', upload.single('image'), async (req, res) => {
@@ -175,11 +269,8 @@ router.post('/update-teaching', upload.single('image'), async (req, res) => {
   const { id, name, course, role } = req.body;
   const image = req.file ? req.file.filename : null;
 
-  // try {
+  try {
       const updateData = { name, course, role, image };
-      // if (image) {
-      //     updateData.image = `/uploads/${image}`; // Store image path
-      // }
 
       const updatedTeaching = await teaching.findByIdAndUpdate(id, updateData, { new: true });
       console.log(updatedTeaching)
@@ -189,9 +280,9 @@ router.post('/update-teaching', upload.single('image'), async (req, res) => {
       }
 
       res.status(200).send({ message: 'Teaching record updated successfully', data: updatedTeaching });
-  // } catch (err) {
-  //     res.status(500).send({ message: 'Error updating teaching record', error: err.message });
-  // }
+  } catch (err) {
+      res.status(500).send({ message: 'Error updating teaching record', error: err.message });
+  }
 });
 
 // Delete Teaching Data

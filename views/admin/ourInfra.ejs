@@ -41,10 +41,19 @@
     .edit:hover, .delete:hover {
         text-decoration: underline;
     }
+    #edit-model-for-ourInfra{
+        display: none;
+    }
 </style>
 
 <body>
     <div>
+        <form action="/admin/our-infrastructure-facilities" method="post" enctype="multipart/form-data">
+            <h2>Our Infrastructure Facilities</h2>
+            <input type="file" name="image" placeholder="image">
+            <input type="text" name="title" placeholder="title">
+            <button type="submit">submit</button>
+        </form>
         <table>
             <thead>
                 <tr>
@@ -55,14 +64,105 @@
             <tbody>
                 <% for(var i =0;i< OurInfrastructure.length; i++){ %>
                 <tr>
-                    <td><%= OurInfrastructure[i].image %></td>
-                    <td><%= OurInfrastructure[i].title %></td>
-                    <td>edit</td>
+                    <td>
+                        <img src="/uploads/<%= OurInfrastructure[i].image %>" alt="Image" style="width: 50px; height: 50px;">
+                    </td>
+                    <td>
+                        <%= OurInfrastructure[i].title %>
+                        <input type="text" id="ourInfra-title-<%= i %>" value="<%= OurInfrastructure[i].title %>">
+                    </td>
+
+                    <td>
+                        <input type="text" id="ourInfra-id-<%= i %>" value="<%= OurInfrastructure[i]._id %>">
+                    </td>
+                    <td>
+                        <button class="edit-for-ourInfra" data-index="<%= i %>">Edit</button>
+                    </td>
+
                     <td>delete</td>
                 </tr>
                 <%}%>
             </tbody>
         </table>
        </div>
+
+        <!-- Edit Modal-for-adminstration -->
+        <div id="edit-model-for-ourInfra">
+            <span class="close-btn">x</span>
+            <div class="modal-header">Edit Teams</div>
+            <form id="ourInfra-editForm">
+                <input type="text" value="" id="edit-ourInfra-id">
+
+                <label for="image">Image</label>
+                <input type="file" id="edit-ourInfra-image">
+
+                <label for="edit-title">Name:</label>
+                <input type="text" value="" id="edit-ourInfra-title" >
+              
+                <button type="submit">Update</button>
+            </form>
+        </div>
+
+        <script>
+            // Show the modal and populate data
+            document.querySelectorAll('.edit-for-ourInfra').forEach(btn => {
+              btn.addEventListener('click', function() {
+                console.log("line0")
+                  const index = this.dataset.index;
+                console.log("line1")
+
+                  const id = document.getElementById(`ourInfra-id-${index}`).value;
+                console.log("line2")
+
+                  const title = document.getElementById(`ourInfra-title-${index}`).value;
+                console.log("line3")
+
+               
+                  document.getElementById('edit-ourInfra-id').value = id;
+                  document.getElementById('edit-ourInfra-title').value = title;
+                
+                  document.getElementById('edit-model-for-ourInfra').style.display = 'block';
+              });
+          });
+  
+          // Handle form submission
+          document.getElementById('ourInfra-editForm').addEventListener('submit', function(event) {
+              event.preventDefault();
+  
+              const id = document.getElementById('edit-ourInfra-id').value;
+              const title = document.getElementById('edit-ourInfra-title').value;
+            
+              const imageInput = document.getElementById('edit-ourInfra-image');  // Get the image input
+  
+              // Create FormData object
+              const formData = new FormData();
+              formData.append('id', id);
+              formData.append('title', title);
+  
+               // Check if a new image was selected and add it to FormData
+              if (imageInput.files.length > 0) {
+                  formData.append('image', imageInput.files[0]);
+              }
+  
+          // Send the form data using fetch (or axios)
+          fetch('/admin/update-ourInfra', {
+          method: 'POST',
+          body: formData,  // Send formData instead of JSON
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log("data", data)
+          if (data.message) {
+              alert('Updated successfully!');
+          } else {
+              alert('Failed to update.');
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert('Error updating the data.');
+      });
+          });
+  </script>
 </body>
 </html>
