@@ -79,7 +79,9 @@
                         <button class="edit-for-ourInfra" data-index="<%= i %>">Edit</button>
                     </td>
 
-                    <td>delete</td>
+                    <td>
+                        <button onclick="deleteOurInfra('<%= OurInfrastructure[i]._id %>')">Delete</button>
+                    </td>
                 </tr>
                 <%}%>
             </tbody>
@@ -162,7 +164,29 @@
           console.error('Error:', error);
           alert('Error updating the data.');
       });
-          });
+    });
+
+    function deleteOurInfra(id) {
+        fetch('/admin/delete-ourInfra', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Reload the page after successful deletion
+            if (data.message === 'ourInfra deleted successfully') {
+            alert("ourInfra deleted successfully");
+            window.location.reload(); // Refresh the page
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
   </script>
 </body>
 </html>
