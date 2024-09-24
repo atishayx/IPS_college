@@ -95,9 +95,9 @@
                         <td>
                             <button class="edit-for-admin" data-index="<%= i %>">Edit</button>
                         </td>
-                        
+
                         <td>
-                            <button>Delete</button>
+                            <button onclick="deleteAdmin('<%= Administration[i]._id %>')">Delete</button>
                         </td>
                     </tr>
                     <%}%>
@@ -187,7 +187,31 @@
         console.error('Error:', error);
         alert('Error updating the data.');
     });
+  });
+
+  function deleteAdmin(id) {
+        fetch('/admin/delete-administration', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Reload the page after successful deletion
+            if (data.message === 'administration deleted successfully') {
+
+            alert("administration deleted successfully");
+            window.location.reload(); // Refresh the page
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
+}
+
 </script>
 </body>
 </html>

@@ -91,6 +91,25 @@ router.post('/update-ourInfra', upload.single('image'), async (req, res) => {
   }
 });
 
+router.post('/delete-ourInfra', async (req, res) => {
+  const { id } = req.body;
+
+  try {
+      // Find the document by id and delete it
+      const deletedNews = await ourInfrastructureFacilities.findByIdAndDelete(id);
+
+      if (!deletedNews) {
+          return res.status(404).send({ message: 'ourInfra item not found' });
+      }
+
+      res.status(200).send({ message: 'ourInfra deleted successfully' });
+
+  } catch (err) {
+      // If there's an error, send a 500 status and the error message
+      res.status(500).send({ message: 'Error deleting ourInfra', error: err.message });
+  }
+});
+
 router.post('/tour-gallery', upload.single('image'), async (req, res) => {
   try {
     const { place } = req.body;
@@ -132,6 +151,26 @@ router.post('/update-tour-gallery', upload.single('image'), async (req, res) => 
       res.status(500).send({ message: 'Error updating teaching record', error: err.message });
   }
 });
+
+router.post('/delete-tour-gallery', async (req, res) => {
+  const { id } = req.body;
+
+  try {
+      // Find the document by id and delete it
+      const deletedNews = await tour.findByIdAndDelete(id);
+
+      if (!deletedNews) {
+          return res.status(404).send({ message: 'tour-gallery item not found' });
+      }
+
+      res.status(200).send({ message: 'tour-gallery deleted successfully' });
+
+  } catch (err) {
+      // If there's an error, send a 500 status and the error message
+      res.status(500).send({ message: 'Error deleting tour-gallery', error: err.message });
+  }
+});
+
 
 router.post('/administration', upload.single('image'), async (req, res) => {
   try {
@@ -177,6 +216,26 @@ router.post('/update-administration', upload.single('image'), async (req, res) =
   }
 });
 
+router.post('/delete-administration', async (req, res) => {
+  const { id } = req.body;
+
+  try {
+      // Find the document by id and delete it
+      const deletedNews = await administration.findByIdAndDelete(id);
+
+      if (!deletedNews) {
+          return res.status(404).send({ message: 'News item not found' });
+      }
+
+      res.status(200).send({ message: 'administration deleted successfully' });
+
+  } catch (err) {
+      // If there's an error, send a 500 status and the error message
+      res.status(500).send({ message: 'Error deleting news', error: err.message });
+  }
+});
+
+
 router.post('/teams', upload.single('image'), async (req, res) => {
   try {
     const { title } = req.body;
@@ -219,8 +278,29 @@ router.post('/update-teams', upload.single('image'), async (req, res) => {
   }
 });
 
+router.post('/delete-teams', async (req, res) => {
+  const { id } = req.body;
+
+  try {
+      // Find the document by id and delete it
+      const deletedNews = await teams.findByIdAndDelete(id);
+
+      if (!deletedNews) {
+          return res.status(404).send({ message: 'News item not found' });
+      }
+
+      res.status(200).send({ message: 'Teams deleted successfully' });
+
+  } catch (err) {
+      // If there's an error, send a 500 status and the error message
+      res.status(500).send({ message: 'Error deleting news', error: err.message });
+  }
+});
+
+
+
 router.post('/ips-event', upload.single('image'), async (req, res) => {
-  // try {
+  try {
     const { title } = req.body;
     const image = req.file ? req.file.filename : null;  // Get the image file path
 
@@ -232,10 +312,10 @@ router.post('/ips-event', upload.single('image'), async (req, res) => {
     await newEntry.save();
     // res.render('admin.ejs')
     res.redirect('/admin/page')
-  // } catch (err) {
-  //   res.status(500).send('Error saving event to the database.');
-  //   console.error(err);
-  // }
+  } catch (err) {
+    res.status(500).send('Error saving event to the database.');
+    console.error(err);
+  }
 });
 
 

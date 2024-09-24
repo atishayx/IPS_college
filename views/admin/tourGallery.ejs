@@ -80,8 +80,9 @@
                     <td>
                         <button class="edit-for-tour" data-index="<%= i %>">Edit</button>
                     </td>
-                    <td>delete</td>
-                </tr>
+                    <td>
+                        <button onclick="deleteTourGallery('<%= Tour[i]._id %>')">Delete</button>
+                    </td>                </tr>
                 <%}%>
             </tbody>
         </table>
@@ -161,7 +162,30 @@
         console.error('Error:', error);
         alert('Error updating the data.');
     });
+  });
+
+  function deleteTourGallery(id) {
+        fetch('/admin/delete-tour-gallery', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Reload the page after successful deletion
+            if (data.message === 'tour-gallery deleted successfully') {
+
+            alert("tour-gallery deleted successfully");
+            window.location.reload(); // Refresh the page
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
+}
 </script>
 </body>
 </html>

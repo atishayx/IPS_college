@@ -58,7 +58,7 @@
             <input type="text" placeholder="role" name="role">
             <button type="submit">submit</button>
        </form>  
-       
+
         <table>
             <thead>
                 <tr>
@@ -95,8 +95,9 @@
                             <button class="edit-for-teaching" data-index="<%= i %>">Edit</button>
                         </td>
                         <td>
-                            <button>Delete</button>
+                            <button onclick="deleteTeaching('<%= Teaching[i]._id %>')">Delete</button>
                         </td>
+
                     </tr>
                     <% } %>
 
@@ -134,7 +135,7 @@
                 const id = document.getElementById(`t-id-${index}`).value;
                 const name = document.getElementById(`t-name-${index}`).value;
                 const course = document.getElementById(`t-course-${index}`).value;
-                const role = document.getElementById(`t-role-${index}`).value;
+                const role = document.getElementById(`bt-role-${index}`).value;
 
                 document.getElementById('edit-id').value = id;
                 document.getElementById('edit-name').value = name;
@@ -180,7 +181,29 @@
         console.error('Error:', error);
         alert('Error updating the data.');
     });
+});
+
+function deleteTeaching(id) {
+        fetch('/admin/delete-teaching', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Reload the page after successful deletion
+            if (data.message === 'Teaching record deleted successfully') {
+                alert("Teaching record deleted successfully");
+                window.location.reload(); // Refresh the page
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
+}
 </script>
 
 </body>

@@ -82,7 +82,7 @@
                         <button class="edit-for-teams" data-index="<%= i %>">Edit</button>
                     </td>
                     <td>
-                        <button>Delete</button>
+                        <button onclick="deleteTeams('<%= Teams[i]._id %>')">Delete</button>
                     </td>
                 </tr>
                 <%}%>
@@ -158,7 +158,29 @@
         console.error('Error:', error);
         alert('Error updating the data.');
     });
+  });
+
+    function deleteTeams(id) {
+        fetch('/admin/delete-teams', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Reload the page after successful deletion
+            if (data.message === 'Teams deleted successfully') {
+                alert("Teams deleted successfully");
+                window.location.reload(); // Refresh the page
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
+}
 </script>
 </body>
 </html>
