@@ -60,8 +60,7 @@ router.post('/our-infrastructure-facilities', upload.single('image'), async (req
     });
 
     await newEntry.save();
-    res.send('Tour Place added successfuly');
-    
+    res.redirect('/admin/page')    
   } catch (err) {
     res.status(500).send('Error saving event to the database.');
     console.error(err);
@@ -121,8 +120,7 @@ router.post('/tour-gallery', upload.single('image'), async (req, res) => {
     });
 
     await newEntry.save();
-    res.send('Tour Place added successfuly');
-    
+    res.redirect('/admin/page')    
   } catch (err) {
     res.status(500).send('Error saving event to the database.');
     console.error(err);
@@ -185,7 +183,7 @@ router.post('/administration', upload.single('image'), async (req, res) => {
     });
 
     await newEntry.save();
-    res.send('department successfully with image uploaded!');
+    res.redirect('/admin/page')    
     
   } catch (err) {
     res.status(500).send('Error saving event to the database.');
@@ -247,7 +245,7 @@ router.post('/teams', upload.single('image'), async (req, res) => {
     });
 
     await newEntry.save();
-    res.send('Event created successfully with image uploaded!');
+    res.redirect('/admin/page')    
     
   } catch (err) {
     res.status(500).send('Error saving event to the database.');
@@ -334,7 +332,7 @@ router.post('/teaching', upload.single('image'), async (req, res) => {
     });
 
     await teachingStaff.save();
-    res.send('Teaching staff added successfuly');
+    res.redirect('/')    
     
   } catch (err) {
     res.status(500).send('Error saving event to the database.');
@@ -398,7 +396,7 @@ router.post('/newsAndUpdate', async(req, res) => {
   try {
     // Save the entry to MongoDB
     await newEntry.save();
-    res.send('Form submitted and data saved successfully!');
+    res.redirect('/admin/page')    
   } catch (err) {
     res.status(500).send('Error saving data to the database.');
     console.error(err);
